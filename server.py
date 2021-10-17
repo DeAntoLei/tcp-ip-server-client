@@ -71,11 +71,10 @@ try:
             
                 # Server response
                 msgSeqNum += 1
-                response = None
-                if msgSeqNum < 15:
-                    response = message(msgSeqNum, SERVER_MESSAGE_TYPES[random.randint(0,2)])
+                if data.seqNum < 15:
+                    response = message(msgSeqNum, SERVER_MESSAGE_TYPES[random.randint(0,2)])                
                 else:
-                    response = "/0"
+                    response = message(msgSeqNum, "terminate")
                 print ("Response message to client: ", response.seqNum, response.msgType, response.timestamp)
                 serveTopicSubscription(pickle.dumps(response))
             except Exception as e:
