@@ -67,15 +67,15 @@ try:
             try:
                 # Client message reception
                 data = pickle.loads(recvTopicInfo())
-                print ("Received message from client: ", data.deviceId, data.seqNum, data.msgType, data.timestamp)
-            
+                print ("Received message #%d %s from %d, at %s" % (data.seqNum, data.msgType, data.deviceId, data.timestamp))
+                
                 # Server response
                 msgSeqNum += 1
                 if data.seqNum < 15:
                     response = message(msgSeqNum, SERVER_MESSAGE_TYPES[random.randint(0,2)])                
                 else:
                     response = message(msgSeqNum, "terminate")
-                print ("Response message to client: ", response.seqNum, response.msgType, response.timestamp)
+                print ("Sending message #%d %s to client, at %d" % (response.seqNum, response.msgType, response.timestamp))
                 serveTopicSubscription(pickle.dumps(response))
             except Exception as e:
                 print (e)
