@@ -1,5 +1,5 @@
 # TCP/IP server-client example
-Simple TCP/IP server-client example, based on MQTT protocol
+Simple TCP/IP server-client example, based on MQTT protocol Developed with Python v. 3.6
 
 ## Server
 
