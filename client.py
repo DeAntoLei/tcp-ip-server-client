@@ -1,7 +1,8 @@
 # client.py application
 # Sends messages with random message types to a server every 1 second until it receives end-of-messssge character
 # Simulates the functionality of an MQTT client that publishes and subscribes to a topic using TCP/IP protocol
-# The client terminates if it fails to establish a connection or if publishing or subscribing actions fail
+# The client terminates if it fails to establish a connection, if publishing or subscribing actions fail 
+# or if 15 message are exchanged succesfully with the server
 
 import sys, random, time, socket, pickle
 
@@ -13,11 +14,16 @@ CLIENT_MESSAGE_TYPES = ["onBody", "offBody", "brfChange", "enuEvent"]
 
 class message:
     def __init__(self, *args):
-        self.seqNum = args[0]
-        self.msgType = args[1]
-        self.timestamp = time.time()
-        if len(args) == 3:
-            self.deviceId = args[2]
+        if len(args) != 0:
+            self.seqNum = args[0]
+            self.msgType = args[1]
+            self.timestamp = time.time()
+            if len(args) == 3:
+                self.deviceId = args[2]
+        else:
+            self.seqNum = 0
+            self.msgType = ""
+            self.timestamp = time.time()
 
 # Function that securely establishes a connection to a server
 def connect():
@@ -65,8 +71,8 @@ try:
     time.sleep(1)
     
     msgSeqNum = 0        
-    response = None
-    while isConnected and response != "/0":
+    response = message()
+    while isConnected and response.msgType != "terminate":
         msgSeqNum += 1
         msg = message(msgSeqNum, CLIENT_MESSAGE_TYPES[random.randint(0,3)], random.randint(0, 1000))
         print ("Sending message to server: ", msg.deviceId, msg.seqNum, msg.msgType, msg.timestamp)
