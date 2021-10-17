@@ -75,7 +75,7 @@ try:
     while isConnected and response.msgType != "terminate":
         msgSeqNum += 1
         msg = message(msgSeqNum, CLIENT_MESSAGE_TYPES[random.randint(0,3)], random.randint(0, 1000))
-        print ("Sending message to server: ", msg.deviceId, msg.seqNum, msg.msgType, msg.timestamp)
+        print ("Sending message #%d %s from %d to server at %d" % (msg.seqNum, msg.msgType, msg.deviceId, msg.timestamp))
            
         try:
             # Sending a message to the server
@@ -83,7 +83,7 @@ try:
             
             # Server response reception
             response = pickle.loads(getSubscriptionMessage())
-            print ("Received message from server: ", response.seqNum, response.msgType, response.timestamp)
+            print ("Received message #%d %s from server at %d" % (response.seqNum, response.msgType, response.timestamp))
         except Exception as e:
             print (e)
             closeConnection()
