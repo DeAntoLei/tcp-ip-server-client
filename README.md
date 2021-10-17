@@ -1,2 +1,10 @@
-# tcp-ip-server-client
+# TCP/IP server-client example
 Simple TCP/IP server-client example, based on MQTT protocol
+
+## Server
+
+Run `py server.py` to run the server application on a terminal window.
+
+## Client
+
+Run `py client.py` to run the server application on another terminal window while keeping server application running.
